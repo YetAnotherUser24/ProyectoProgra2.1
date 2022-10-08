@@ -1,0 +1,9 @@
+*.exe
+tasks.json
+main-debug
+.ccls-cache/
+.replit
+main
+main.o
+replit.nix
+Makefile
