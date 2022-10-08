@@ -13,6 +13,6 @@ int main()
     array_filler(arr, 3);
     array_printer(arr, 3);
     delete[] arr;
-
+    arr = nullptr;
     return 0;
 }
