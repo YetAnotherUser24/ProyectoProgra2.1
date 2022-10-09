@@ -148,6 +148,10 @@ void array_creator(int *&arr, int n)
 {
     arr = new int[n]();
 }
+void array_creator(bool *&arr, int n)
+{
+    arr = new bool[n]();
+}
 
 void array_filler(double *arr, int n, int min, int max, int decimals)
 {
