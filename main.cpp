@@ -9,7 +9,7 @@ void paso(double p, double *&distancia, int *&pasolibre, int idx);
 int turno(double *&distancia, string *&nombres, int *&pasolibre, int *&contador, int n);
 void inicializador(double *&distancia, double *&velocidad, string *&nombres, int *&pasolibre, int *&contador, int n);
 void finalizador(double *&distancia, double *&velocidad, string *&nombres, int *&pasolibre, int *&contador);
-void podio(double *&distancia, string *&nombres, int *&contador, int n);
+// podio(double *&distancia, string *&nombres, int *&contador, int n);
 
 int main()
 {
@@ -64,30 +64,41 @@ void paso(double p, double *&distancia, int *&pasolibre, int idx)
 
 int turno(double *&distancia, string *&nombres, int *&pasolibre, int *&contador, int n)
 {
+    bool flag;
     double p;
     while (true)
     {
+
         for (int i = 0; i < n; i++)
         {
+            flag = false;
             p = probabilidad(0, 100, 100);
             if (pasolibre[i] == 0)
             {
                 paso(p, distancia, pasolibre, i);
             }
-            else
+            else if (pasolibre[i] > 0)
             {
                 pasolibre[i] -= 1;
+            }
+            else
+            {
+                flag = true;
             }
             contador[i] += 1;
             // cout << "\n" << distancia[i] << "\n";
             if (distancia[i] >= 300000)
             {
+                pasolibre[i] = -1;
                 array_printer(distancia, n);
                 ;
                 cout << "\n"
                      << distancia[i] << "\n";
-                return 0;
             }
+        }
+        if (flag)
+        {
+            return 0;
         }
     }
 }
