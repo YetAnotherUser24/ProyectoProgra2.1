@@ -9,7 +9,7 @@ void paso(double p, double *&distancia, int *&pasolibre, int idx);
 int turno(double *&distancia, string *&nombres, int *&pasolibre, int *&contador, int n);
 void inicializador(double *&distancia, double *&velocidad, string *&nombres, int *&pasolibre, int *&contador, int n);
 void finalizador(double *&distancia, double *&velocidad, string *&nombres, int *&pasolibre, int *&contador);
-void podio(double *&distancia, string *&nombres, double *&contador, int n);
+void podio(double *&distancia, string *&nombres, int *&contador, int n);
 
 int main()
 {
@@ -21,9 +21,14 @@ int main()
     int *contador;
 
     inicializador(distancia, velocidad, nombres, pasolibre, contador, autos);
+    array_printer(distancia, autos);
+    array_printer(velocidad, autos);
+    array_printer(nombres, autos);
+    array_printer(contador, autos);
     turno(distancia, nombres, pasolibre, contador, autos);
+    cout << "FIN";
     finalizador(distancia, velocidad, nombres, pasolibre, contador);
-    podio(distancia, nombres, contador, 8);
+    // podio(distancia, nombres, contador, autos);
     return 0;
 }
 
@@ -64,7 +69,7 @@ int turno(double *&distancia, string *&nombres, int *&pasolibre, int *&contador,
     {
         for (int i = 0; i < n; i++)
         {
-            p = probabilidad(0, 1, 100);
+            p = probabilidad(0, 100, 100);
             if (pasolibre[i] == 0)
             {
                 paso(p, distancia, pasolibre, i);
@@ -74,11 +79,13 @@ int turno(double *&distancia, string *&nombres, int *&pasolibre, int *&contador,
                 pasolibre[i] -= 1;
             }
             contador[i] += 1;
-
+            // cout << "\n" << distancia[i] << "\n";
             if (distancia[i] >= 300000)
             {
-                array_printer(distancia, 8);
+                array_printer(distancia, n);
                 ;
+                cout << "\n"
+                     << distancia[i] << "\n";
                 return 0;
             }
         }
@@ -96,7 +103,8 @@ void podio(double *&distancia, string *&nombres, int *&contador, int n)
         }
     }
     array_printer(distancia, 8);
-    int n = 0, temp = distancia[n];
+    n = 0;
+    int temp = distancia[n];
     for (int i = 0; i < n; i++)
     {
         if (distancia[i] >= temp)
