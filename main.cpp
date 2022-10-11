@@ -22,11 +22,14 @@ int main()
 
     inicializador(distancia, velocidad, nombres, pasolibre, contador, autos);
     array_printer(distancia, autos);
-    array_printer(velocidad, autos);
     array_printer(nombres, autos);
     array_printer(contador, autos);
     turno(distancia, nombres, pasolibre, contador, autos);
-    cout << "FIN";
+    cout << "\nFIN\n";
+    array_printer(distancia, autos);
+    array_printer(nombres, autos);
+    array_printer(contador, autos);
+
     finalizador(distancia, velocidad, nombres, pasolibre, contador);
     // podio(distancia, nombres, contador, autos);
     return 0;
@@ -76,24 +79,22 @@ int turno(double *&distancia, string *&nombres, int *&pasolibre, int *&contador,
             if (pasolibre[i] == 0)
             {
                 paso(p, distancia, pasolibre, i);
+                contador[i] += 1;
             }
             else if (pasolibre[i] > 0)
             {
                 pasolibre[i] -= 1;
+                contador[i] += 1;
             }
             else
             {
                 flag = true;
             }
-            contador[i] += 1;
+
             // cout << "\n" << distancia[i] << "\n";
             if (distancia[i] >= 300000)
             {
                 pasolibre[i] = -1;
-                array_printer(distancia, n);
-                ;
-                cout << "\n"
-                     << distancia[i] << "\n";
             }
         }
         if (flag)
