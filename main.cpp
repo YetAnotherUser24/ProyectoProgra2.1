@@ -23,11 +23,11 @@ int main()
 
     inicializador(distancia, velocidad, nombres, pasolibre, contador, autos);
     array_printer(distancia, autos);
-    array_printer(velocidad, autos);
     array_printer(nombres, autos);
     array_printer(contador, autos);
     turno(distancia, nombres, pasolibre, contador, autos);
-    cout << "FIN";
+    cout << "\nFIN\n";
+
     finalizador(distancia, velocidad, nombres, pasolibre, contador);
     Sort(contador, distancia, nombres, autos);
     podio(distancia, nombres, contador, autos);
@@ -66,30 +66,34 @@ void paso(double p, double *&distancia, int *&pasolibre, int idx)
 
 int turno(double *&distancia, string *&nombres, int *&pasolibre, int *&contador, int n)
 {
+    bool flag;
     double p;
     while (true)
     {
+
         for (int i = 0; i < n; i++)
         {
+            flag = false;
             p = probabilidad(0, 100, 100);
             if (pasolibre[i] == 0)
             {
                 paso(p, distancia, pasolibre, i);
+                contador[i] += 1;
             }
-            else
+            else if (pasolibre[i] > 0)
             {
                 pasolibre[i] -= 1;
             }
-            contador[i] += 1;
+
             // cout << "\n" << distancia[i] << "\n";
             if (distancia[i] >= 300000)
             {
-                array_printer(distancia, n);
-                ;
-                cout << "\n"
-                     << distancia[i] << "\n";
-                return 0;
+                pasolibre[i] = -1;
             }
+        }
+        if (flag)
+        {
+            return 0;
         }
     }
 }
@@ -102,9 +106,16 @@ void podio(double *&distancia, string *&nombres, int *&contador, int n)
         {
             cout << "Ganador: " << nombres[i] << "    con: " << contador[i] << " dados, y con una distancia recorrida total de: " << distancia[i];
         }
-        else
+    }
+    array_printer(distancia, 8);
+    n = 0;
+    int temp = distancia[n];
+    for (int i = 0; i < n; i++)
+    {
+        if (distancia[i] >= temp)
         {
-            cout << i << "° Puesto" << nombres[i] << "    con: " << contador[i] << " dados, y con una distancia recorrida total de: " << distancia[i];
+            temp = distancia[i];
+            n = i;
         }
     }
 }
