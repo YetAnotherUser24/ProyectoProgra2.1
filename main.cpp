@@ -14,7 +14,7 @@ void podio(double *&distancia, string *&nombres, int *&contador, int n);
 
 int main()
 {
-    srand(time(NULL));
+
     const int autos = 8;
     string *nombres;
     double *distancia;
@@ -50,6 +50,24 @@ void paso(double p, double *&distancia, int *&pasolibre, int idx)
 
     if (p > 0.8)
     {
+
+        //(PREGUNTAS OPCIONALES)
+        /*
+        p = probabilidad(1, 100, 100);
+        if (p >= 0.9 && p <= 1)
+        {
+            distancia[idx] += 13.89;
+            pasolibre[idx] = 1;
+        }
+        else if (p >= 0.5 && p <= 0.6)
+        {
+            pasolibre[idx] = 5;
+        }
+        else if (p >= 0.0 && p <= 0.1)
+        {
+            pasolibre[idx] = 10;
+        }
+        */
         distancia[idx] += 83;
     }
     else if (p >= 0.6 && p < 0.8)
