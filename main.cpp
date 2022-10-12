@@ -7,22 +7,21 @@ using namespace std;
 double probabilidad(int min = 0, int max = 100, double decimals = 100);
 void paso(double p, double *&distancia, int *&pasolibre, int idx);
 int turno(double *&distancia, string *&nombres, int *&pasolibre, int *&contador, int n);
-void inicializador(double *&distancia, double *&velocidad, string *&nombres, int *&pasolibre, int *&contador, int n);
-void finalizador(double *&distancia, double *&velocidad, string *&nombres, int *&pasolibre, int *&contador);
+void inicializador(double *&distancia, string *&nombres, int *&pasolibre, int *&contador, int n);
+void finalizador(double *&distancia, string *&nombres, int *&pasolibre, int *&contador);
 void _Sort(int *&contador, double *&distancia, string *&nombres, int n);
 void podio(double *&distancia, string *&nombres, int *&contador, int n);
 
 int main()
 {
-
+    srand(time(NULL));
     const int autos = 8;
     string *nombres;
     double *distancia;
-    double *velocidad;
     int *pasolibre;
     int *contador;
 
-    inicializador(distancia, velocidad, nombres, pasolibre, contador, autos);
+    inicializador(distancia, nombres, pasolibre, contador, autos);
     array_printer(distancia, autos);
     array_printer(nombres, autos);
     array_printer(contador, autos);
@@ -35,7 +34,7 @@ int main()
     _Sort(contador, distancia, nombres, autos);
 
     podio(distancia, nombres, contador, autos);
-    finalizador(distancia, velocidad, nombres, pasolibre, contador);
+    finalizador(distancia, nombres, pasolibre, contador);
 
     return 0;
 }
@@ -119,7 +118,7 @@ int turno(double *&distancia, string *&nombres, int *&pasolibre, int *&contador,
                 pasolibre[i] = -1;
             }
         }
-        if (flag == 8)
+        if (flag == n)
         {
             return 0;
         }
@@ -168,10 +167,9 @@ void _Sort(int *&contador, double *&distancia, string *&nombres, int n)
     }
 }
 
-void inicializador(double *&distancia, double *&velocidad, string *&nombres, int *&pasolibre, int *&contador, int n)
+void inicializador(double *&distancia, string *&nombres, int *&pasolibre, int *&contador, int n)
 {
     array_creator(distancia, n);
-    array_creator(velocidad, n);
     array_creator(nombres, n);
     array_creator(pasolibre, n);
     array_creator(contador, n);
@@ -184,10 +182,9 @@ void inicializador(double *&distancia, double *&velocidad, string *&nombres, int
     }
 }
 
-void finalizador(double *&distancia, double *&velocidad, string *&nombres, int *&pasolibre, int *&contador)
+void finalizador(double *&distancia, string *&nombres, int *&pasolibre, int *&contador)
 {
     delete[] distancia;
-    delete[] velocidad;
     delete[] nombres;
     delete[] pasolibre;
     delete[] contador;
