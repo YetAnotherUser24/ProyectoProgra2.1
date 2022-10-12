@@ -9,6 +9,7 @@ void paso(double p, double *&distancia, int *&pasolibre, int idx);
 int turno(double *&distancia, string *&nombres, int *&pasolibre, int *&contador, int n);
 void inicializador(double *&distancia, double *&velocidad, string *&nombres, int *&pasolibre, int *&contador, int n);
 void finalizador(double *&distancia, double *&velocidad, string *&nombres, int *&pasolibre, int *&contador);
+void Sort(int *&contador, double *&distancia, string *&nombres, int n);
 void podio(double *&distancia, string *&nombres, int *&contador, int n);
 
 int main()
@@ -28,7 +29,8 @@ int main()
     turno(distancia, nombres, pasolibre, contador, autos);
     cout << "FIN";
     finalizador(distancia, velocidad, nombres, pasolibre, contador);
-    // podio(distancia, nombres, contador, autos);
+    Sort(contador, distancia, nombres, autos);
+    podio(distancia, nombres, contador, autos);
     return 0;
 }
 
@@ -96,40 +98,40 @@ void podio(double *&distancia, string *&nombres, int *&contador, int n)
 {
     for (int i = 0; i < n; i++)
     {
-        if (distancia[i] >= 300000)
+        if (i == 1)
         {
-            cout << "Ganador: " << nombres[i] << "    Cantidad de pasos: " << contador[i];
-            distancia[i] = 0;
+            cout << "Ganador: " << nombres[i] << "    con: " << contador[i] << " dados, y con una distancia recorrida total de: " << distancia[i];
+        }
+        else
+        {
+            cout << i << "° Puesto" << nombres[i] << "    con: " << contador[i] << " dados, y con una distancia recorrida total de: " << distancia[i];
         }
     }
-    array_printer(distancia, 8);
-    n = 0;
-    int temp = distancia[n];
-    for (int i = 0; i < n; i++)
-    {
-        if (distancia[i] >= temp)
-        {
-            temp = distancia[i];
-            n = i;
-        }
-    }
-    cout << "2do puesto: " << nombres[n] << "    Cantidad de pasos: " << contador[n];
+}
 
-    double *distancias;
-    distancias = distancia;
-    distancias[n] = 0;
-    array_printer(distancia, 8);
-    n = 0;
-    temp = distancia[n];
-    for (int i = 0; i < n; i++)
+void Sort(int *&contador, double *&distancia, string *&nombres, int n)
+{
+    for (int step = 0; step < n; ++step)
     {
-        if (distancia[i] >= temp)
+        for (int i = 0; i < n - step; ++i)
         {
-            temp = distancia[i];
-            n = i;
+            if (contador[i] > contador[i + 1])
+            {
+
+                int temp = contador[i];
+                contador[i] = contador[i + 1];
+                contador[i + 1] = temp;
+
+                double temp = distancia[i];
+                distancia[i] = distancia[i + 1];
+                distancia[i + 1] = temp;
+
+                string temp = nombres[i];
+                nombres[i] = nombres[i + 1];
+                nombres[i + 1] = temp;
+            }
         }
     }
-    cout << "3er puesto: " << nombres[n] << "    Cantidad de pasos: " << contador[n];
 }
 
 void inicializador(double *&distancia, double *&velocidad, string *&nombres, int *&pasolibre, int *&contador, int n)
