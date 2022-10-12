@@ -94,10 +94,10 @@ int turno(double *&distancia, string *&nombres, int *&pasolibre, int *&contador,
             {
                 flag += 1;
             }
-            // cout << "\n" << distancia[i] << "\n";
-            if (distancia[i] >= 300000.0 && pasolibre[i] != -1)
+
+            if (distancia[i] >= 300000.0 /*&& pasolibre[i] != -1*/)
             {
-                cout << "\n\nPasando con " << distancia[i] << " siendo " << nombres[i];
+                // cout << "\n\nPasando con " << distancia[i] << " siendo " << nombres[i]; (Puede ser otra manera de imprimir los puestos)
                 pasolibre[i] = -1;
             }
         }
