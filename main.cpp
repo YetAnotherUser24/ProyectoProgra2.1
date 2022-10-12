@@ -9,11 +9,12 @@ void paso(double p, double *&distancia, int *&pasolibre, int idx);
 int turno(double *&distancia, string *&nombres, int *&pasolibre, int *&contador, int n);
 void inicializador(double *&distancia, double *&velocidad, string *&nombres, int *&pasolibre, int *&contador, int n);
 void finalizador(double *&distancia, double *&velocidad, string *&nombres, int *&pasolibre, int *&contador);
-void Sort(int *&contador, double *&distancia, string *&nombres, int n);
+void _Sort(int *&contador, double *&distancia, string *&nombres, int n);
 void podio(double *&distancia, string *&nombres, int *&contador, int n);
 
 int main()
 {
+    srand(time(NULL));
     const int autos = 8;
     string *nombres;
     double *distancia;
@@ -27,10 +28,15 @@ int main()
     array_printer(contador, autos);
     turno(distancia, nombres, pasolibre, contador, autos);
     cout << "\nFIN\n";
+    array_printer(distancia, autos);
+    array_printer(nombres, autos);
+    array_printer(contador, autos);
+    cout << "\n";
+    _Sort(contador, distancia, nombres, autos);
 
-    finalizador(distancia, velocidad, nombres, pasolibre, contador);
-    Sort(contador, distancia, nombres, autos);
     podio(distancia, nombres, contador, autos);
+    finalizador(distancia, velocidad, nombres, pasolibre, contador);
+
     return 0;
 }
 
@@ -66,14 +72,13 @@ void paso(double p, double *&distancia, int *&pasolibre, int idx)
 
 int turno(double *&distancia, string *&nombres, int *&pasolibre, int *&contador, int n)
 {
-    bool flag;
+    int flag;
     double p;
     while (true)
     {
-
+        flag = 0;
         for (int i = 0; i < n; i++)
         {
-            flag = false;
             p = probabilidad(0, 100, 100);
             if (pasolibre[i] == 0)
             {
@@ -83,15 +88,20 @@ int turno(double *&distancia, string *&nombres, int *&pasolibre, int *&contador,
             else if (pasolibre[i] > 0)
             {
                 pasolibre[i] -= 1;
+                contador[i] += 1;
             }
-
-            // cout << "\n" << distancia[i] << "\n";
-            if (distancia[i] >= 300000)
+            else
             {
+                flag += 1;
+            }
+            // cout << "\n" << distancia[i] << "\n";
+            if (distancia[i] >= 300000.0 && pasolibre[i] != -1)
+            {
+                cout << "\n\nPasando con " << distancia[i] << " siendo " << nombres[i];
                 pasolibre[i] = -1;
             }
         }
-        if (flag)
+        if (flag == 8)
         {
             return 0;
         }
@@ -102,44 +112,39 @@ void podio(double *&distancia, string *&nombres, int *&contador, int n)
 {
     for (int i = 0; i < n; i++)
     {
-        if (i == 1)
+        if (i == 0)
         {
-            cout << "Ganador: " << nombres[i] << "    con: " << contador[i] << " dados, y con una distancia recorrida total de: " << distancia[i];
+            cout << "\nGanador: " << nombres[i] << " con: " << contador[i] << " pasos dados, y con una distancia recorrida total de: " << distancia[i];
         }
-    }
-    array_printer(distancia, 8);
-    n = 0;
-    int temp = distancia[n];
-    for (int i = 0; i < n; i++)
-    {
-        if (distancia[i] >= temp)
+        else
         {
-            temp = distancia[i];
-            n = i;
+            cout << endl
+                 << endl
+                 << i + 1 << "° Puesto: " << nombres[i] << " con: " << contador[i] << " pasos dados, y con una distancia recorrida total de: " << distancia[i];
         }
     }
 }
 
-void Sort(int *&contador, double *&distancia, string *&nombres, int n)
+void _Sort(int *&contador, double *&distancia, string *&nombres, int n)
 {
     for (int step = 0; step < n; ++step)
     {
-        for (int i = 0; i < n - step; ++i)
+        for (int i = 0; i < n - 1; ++i)
         {
             if (contador[i] > contador[i + 1])
             {
 
-                int temp = contador[i];
+                int tempC = contador[i];
                 contador[i] = contador[i + 1];
-                contador[i + 1] = temp;
+                contador[i + 1] = tempC;
 
-                double temp = distancia[i];
+                double tempD = distancia[i];
                 distancia[i] = distancia[i + 1];
-                distancia[i + 1] = temp;
+                distancia[i + 1] = tempD;
 
-                string temp = nombres[i];
+                string tempS = nombres[i];
                 nombres[i] = nombres[i + 1];
-                nombres[i + 1] = temp;
+                nombres[i + 1] = tempS;
             }
         }
     }
