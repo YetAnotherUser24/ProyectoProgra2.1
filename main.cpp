@@ -9,7 +9,7 @@ void paso(double p, double *&distancia, int *&pasolibre, int idx);
 int turno(double *&distancia, string *&nombres, int *&pasolibre, int *&contador, int n);
 void inicializador(double *&distancia, string *&nombres, int *&pasolibre, int *&contador, int n);
 void finalizador(double *&distancia, string *&nombres, int *&pasolibre, int *&contador);
-void _Sort(int *&contador, double *&distancia, string *&nombres, int n);
+void sort_carritos(double *&distancia, string *&nombres, int *&contador, int n);
 void podio(double *&distancia, string *&nombres, int *&contador, int n);
 
 int main()
@@ -22,17 +22,8 @@ int main()
     int *contador;
 
     inicializador(distancia, nombres, pasolibre, contador, autos);
-    array_printer(distancia, autos);
-    array_printer(nombres, autos);
-    array_printer(contador, autos);
     turno(distancia, nombres, pasolibre, contador, autos);
-    cout << "\nFIN\n";
-    array_printer(distancia, autos);
-    array_printer(nombres, autos);
-    array_printer(contador, autos);
-    cout << "\n";
-    _Sort(contador, distancia, nombres, autos);
-
+    sort_carritos(distancia, nombres, contador, autos);
     podio(distancia, nombres, contador, autos);
     finalizador(distancia, nombres, pasolibre, contador);
 
@@ -69,7 +60,7 @@ void paso(double p, double *&distancia, int *&pasolibre, int idx)
         */
         distancia[idx] += 83;
     }
-    else if (p >= 0.6 && p < 0.8)
+    else if (p >= 0.6 && p <= 0.8)
     {
         distancia[idx] += 50;
     }
@@ -127,22 +118,23 @@ int turno(double *&distancia, string *&nombres, int *&pasolibre, int *&contador,
 
 void podio(double *&distancia, string *&nombres, int *&contador, int n)
 {
+    cout << "\n\n///////////  R E S U L T A D O S  ///////////\n";
     for (int i = 0; i < n; i++)
     {
         if (i == 0)
         {
-            cout << "\nGanador: " << nombres[i] << " con: " << contador[i] << " pasos dados, y con una distancia recorrida total de: " << distancia[i];
+            cout << "\nGanador: " << nombres[i] << " con: " << contador[i] << " pasos dados y con una distancia recorrida total de: " << distancia[i];
         }
         else
         {
             cout << endl
                  << endl
-                 << i + 1 << "° Puesto: " << nombres[i] << " con: " << contador[i] << " pasos dados, y con una distancia recorrida total de: " << distancia[i];
+                 << i + 1 << "° Puesto: " << nombres[i] << " con: " << contador[i] << " pasos dados y con una distancia recorrida total de: " << distancia[i];
         }
     }
 }
 
-void _Sort(int *&contador, double *&distancia, string *&nombres, int n)
+void sort_carritos(double *&distancia, string *&nombres, int *&contador, int n)
 {
     for (int step = 0; step < n; ++step)
     {

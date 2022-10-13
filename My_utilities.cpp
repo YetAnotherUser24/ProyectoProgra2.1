@@ -155,7 +155,6 @@ void array_creator(bool *&arr, int n)
 
 void array_filler(double *arr, int n, int min, int max, int decimals)
 {
-    srand(time(NULL));
     for (int i = 0; i < n; i++)
     {
         arr[i] = (min + rand() % (max + 1 - min)) / double(decimals);
@@ -163,7 +162,6 @@ void array_filler(double *arr, int n, int min, int max, int decimals)
 }
 void array_filler(string *arr, int n, int min, int max)
 {
-    srand(time(NULL));
     for (int i = 0; i < n; i++)
     {
         arr[i] = char(min + rand() % (max + 1 - min));
@@ -171,7 +169,6 @@ void array_filler(string *arr, int n, int min, int max)
 }
 void array_filler(int *arr, int n, int min, int max)
 {
-    srand(time(NULL));
     for (int i = 0; i < n; i++)
     {
         arr[i] = min + rand() % (max + 1 - min);
